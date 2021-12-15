@@ -29,6 +29,6 @@ export default {
     return { email, password, handleSubmit, error };
   }
 };
-</scripit>
+</script>
 
 <style></style>
