@@ -4,7 +4,7 @@
       <img src="@/assets/ninja.png" alt="Ninja" />
       <h1><router-link :to="{ name: 'Home' }">Muso Ninja</router-link></h1>
       <div class="links">
-        <button>Logout</button>
+        <button @click="handleClick">Logout</button>
         <router-link class="btn" :to="{ name: 'Signup' }">Signup</router-link>
         <router-link class="btn" :to="{ name: 'Login' }">Login</router-link>
       </div>
@@ -13,9 +13,25 @@
 </template>
 
 <script>
+import useLogout from '@/composables/useLogout';
+import { useRouter } from 'vue-router';
+
 export default {
-  
-};
+  setup(){
+    const { logout, error, isPending } = useLogout();
+    const router = useRouter();
+
+    const handleClick = async () => {
+      await logout();
+      if(!error.value){
+        console.log('user logged out');
+        router.push({ name: 'login' });
+      }
+    };
+
+    return { handleClick };
+  }
+}
 </script>
 
 <style scoped>
