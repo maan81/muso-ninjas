@@ -1,31 +1,38 @@
 <template>
-  <form @submit.prevent="handleSubmit">
-    <h4>Create New Playlist</h4>
-    <input type="text" required placeholder="Playlist Title" v-model="title">
-    <textarea required placeholder="Playlist Description" v-model="description">
-    </textarea>
-    
-    <label>Upload playlist cover image</label>
-    <input type="file" @change="handleChange">
-    
-    <div class="error">{{ fileError }}</div>
-    <button>Create</button>
-  </form>
+  <div>
+    <form @submit.prevent="handleSubmit">
+      <h4>Create New Playlist</h4>
+      <input type="text" required placeholder="Playlist Title" v-model="title">
+      <textarea required placeholder="Playlist Description" v-model="description">
+      </textarea>
+
+      <label>Upload playlist cover image</label>
+      <input type="file" @change="handleChange">
+
+      <div class="error">{{ fileError }}</div>
+      <button>Create</button>
+    </form>
+  </div>
 </template>
 
 <script>
 import { ref } from 'vue';
+import useStorage from '@/composables/useStorage';
 
 export default {
   setup() {
+    const { filePath, url, uploadImage } = useStorage();
+
     const title = ref('');
     const description = ref('');
     const file = ref(null);
     const fileError = ref(null);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
       if(file.value){
         console.log(title.value, description.value, file.value);
+        await uploadImage(file.value);
+        console.log('image uploaded url: ', url.value);
       }
     };
 
@@ -33,7 +40,7 @@ export default {
     const types = ['image/png', 'image/jpeg'];
 
     const handleChange = (e) => {
-      const selected = e.target.files[0];
+      let selected = e.target.files[0];
       console.log(selected);
 
       if(selected && types.includes(selected.type)){

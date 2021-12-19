@@ -1,5 +1,6 @@
 import {ref} from 'vue';
 import {projectStorage} from '../firebase/config';
+import getUser from './getUser';
 
 const { user } = getUser();
 
@@ -9,21 +10,23 @@ const useStorage = () => {
   const filePath = ref(null);
 
   const uploadImage = async (file) => {
-    // template strings useaaaa backticks 
+    // template strings use backticks
     filePath.value = `covers/${user.value.uid}/${file.name}`;
     const storageRef = projectStorage.ref(filePath.value);
 
+    console.log(filePath.value);
+    // console.log(storageRef);
     try{
       const res = await storageRef.put(file);
       // in firebase getDownloadURL returns the link
-      url.value = res.ref.getDownloadURL();
+      url.value = await res.ref.getDownloadURL();
     }catch(err){
       console.log(err.message);
       error.value = err.message;
     };
   };
 
-  return { url, filepath, error, uploadImage };
+  return { url, filePath, error, uploadImage };
 };
 
-export default userStorage;
+export default useStorage;
