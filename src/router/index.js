@@ -7,7 +7,7 @@ import PlaylistDetails from '../views/playlists/PlaylistDetails.vue'
 
 // for routeGuard
 import { projectAuth } from '../firebase/config';
-const { requireAuth } = (to, from, next) => {
+const requireAuth = (to, from, next) => {
   let user = projectAuth.currentUser;
   if(!user){
     next({ name: 'Login' });

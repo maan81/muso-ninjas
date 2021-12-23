@@ -4,7 +4,7 @@
     <!-- playlist info here -->
     <div class="playlist-info">
       <div class="cover">
-        <img :src="playlist.coverUrl" alt="{{ playlist.title }}">
+        <img :src="playlist.coverUrl" :alt="playlist.title">
       </div>
       <h2>{{ playlist.title }}</h2>
       <p class="username">Created by {{ playlist.userName }}</p>
@@ -35,7 +35,7 @@ export default {
     const { error, document: playlist } = getDocument('playlists', props.id);
     const { user } = getUser();
     const { deleteDoc } = useDocument('playlists', props.id);
-    const { deleteImage } = useStorage(playlist.value.filePath);
+    const { deleteImage } = useStorage();
     const router = useRouter();
 
     const ownership = computed(() => {
@@ -43,7 +43,7 @@ export default {
     });
 
     const handleDelete = async () => {
-      await deleteImage();
+      await deleteImage(playlist.value.filePath);
       await deleteDoc();
       router.push({ name: 'Home' });
     };

@@ -32,7 +32,7 @@ export default {
       await logout();
       if(!error.value){
         console.log('user logged out');
-        router.push({ name: 'login' });
+        router.push({ name: 'Login' });
       }
     };
 
