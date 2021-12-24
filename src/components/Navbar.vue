@@ -5,6 +5,7 @@
       <h1><router-link :to="{ name: 'Home' }">Muso Ninja</router-link></h1>
       <div class="links">
         <div v-if="user">
+          <span>{{ user.displayName }}</span>
           <router-link :to="{ name: 'CreatePlaylist' }">Create Playlist</router-link>
           <button @click="handleClick">Logout</button>
         </div>
