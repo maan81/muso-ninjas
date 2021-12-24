@@ -27,7 +27,7 @@ const useDocument = (collection, id) => {
     error.value = null;
 
     try{
-      const res = await docRef.update({updates});
+      const res = await docRef.update(updates);
       isPending.value = false;
       return res;
     } catch (err) {
