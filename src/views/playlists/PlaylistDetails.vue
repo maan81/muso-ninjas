@@ -15,12 +15,14 @@
     <!-- song list -->
     <div class="song-list">
       <p>song list here</p>
+      <AddSong v-if="ownership" :playlist="playlist" />
     </div>
 
   </div>
 </template>
 
 <script>
+import AddSong from '@/components/AddSong';
 import useStorage from '@/composables/useStorage';
 import useDocument from '@/composables/useDocument';
 import getDocument from '@/composables/getDocument';
@@ -30,6 +32,7 @@ import { useRouter } from 'vue-router';
 
 export default {
   props: ['id'],
+  components: {AddSong},
   setup(props){
     // here renaming document to playlist !!
     const { error, document: playlist } = getDocument('playlists', props.id);
