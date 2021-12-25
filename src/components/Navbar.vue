@@ -7,6 +7,7 @@
         <div v-if="user">
           <span>{{ user.displayName }}</span>
           <router-link :to="{ name: 'CreatePlaylist' }">Create Playlist</router-link>
+          <router-link :to="{ name: 'UserPlaylists' }">My Playlist</router-link>
           <button @click="handleClick">Logout</button>
         </div>
         <div v-else >
@@ -22,6 +23,8 @@
 import useLogout from '@/composables/useLogout';
 import { useRouter } from 'vue-router';
 import getUser from '@/composables/getUser';
+import UserPlaylists from '../views/playlists/UserPlaylists.vue'
+
 
 export default {
   setup(){
