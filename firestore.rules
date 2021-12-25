@@ -1,12 +1,12 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /playlist/{docId} {
+    match /playlists/{docId} {
       // allow read & create for logged in user
       allow read, create: if request.auth != null;
 
       // allow edit & delete for user who created the data
-      allow delete, update: if request.auth.uid == resource.data.userId
+      allow delete, update: if request.auth.uid == resource.data.userId;
     }
   }
 }
